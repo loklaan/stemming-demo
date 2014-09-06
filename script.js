@@ -29,7 +29,15 @@
   };
 
   Exports.buildStems = function() {
-    wordlist = [];
+    var steps = {
+      one: $('#step1').prop('checked'),
+      two: $('#step2').prop('checked'),
+      three: $('#step3').prop('checked'),
+      four: $('#step4').prop('checked'),
+      five: $('#step5').prop('checked')
+    };
+
+        wordlist = [];
     stemmed = [];
     diffed = [];
     var diffcount= 0,
@@ -46,7 +54,7 @@
     for (var index in wordlist) {
       if (wordlist.hasOwnProperty(index)) {
         var singleTimer = Date.now();
-        var stem = stemmer(wordlist[index]);
+        var stem = stemmer(wordlist[index], steps);
         timer += Date.now() - singleTimer;
         stemmed.push(stem);
 

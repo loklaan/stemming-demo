@@ -28,12 +28,36 @@
     .not-padded {
       padding:0;
     }
+    input[type=checkbox] {
+      width: 1.2em;
+      height: 1.2em;
+    }
   </style>
 </head>
 <body>
   <main class="container">
 
     <h1 class="text-center">Porter Stemmer <small>Demo</small></h1>
+    <p class="text-center">
+      <strong>Algorithm Steps:</strong>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="step1" checked="true">1
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="step2" checked="true">2
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="step3" checked="true">3
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="step4" checked="true">4
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="step5" checked="true">5
+      </label>
+    </p>
+
+    <hr>
 
     <!-- ============================================ -->
     <!--                Content Sections              -->
@@ -117,7 +141,7 @@
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
-  <script src="./PorterStemmer1980.js" type="text/javascript"></script>
+  <script src="./PorterStemmer1980Mod.js" type="text/javascript"></script>
   <script src="script.js" type="text/javascript"></script>
 </body>
 </html>
