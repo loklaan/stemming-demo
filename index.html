@@ -6,7 +6,7 @@
   <title>Port Stemmer</title>
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
   <style>
-    #input, #output {
+    #input, #output, #diff {
       border-radius: 0;
       border-radius: 0;
       border: 0;
@@ -16,7 +16,7 @@
       outline: 0px none;
       box-shadow: 0px 0px 8px rgba(82, 168, 236, 0.6);
     }
-    #output:focus {
+    #output:focus, #diff:focus {
       border-color: #CCC;
       outline: 0px none;
       box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -25,7 +25,7 @@
       border-radius: 0;
       border-radius: 0;
     }
-    .panel-body {
+    .not-padded {
       padding:0;
     }
   </style>
@@ -47,10 +47,10 @@
             </div>
             <h4>Words <span id="wordscount" class="label label-default">0</span></h4>
           </div>
-          <div class="panel-body">
+          <div class="panel-body not-padded">
             <textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="form-control" id="input" cols="30" rows="15" style="resize:none">Paste content here!</textarea>
             <button class="areabtn btn btn-primary btn-lg btn-block" onclick="Stem.buildStems()">
-              Process<br>
+              Start<br>
             </button>
           </div>
         </div>
@@ -64,7 +64,7 @@
             </div>
             <h4>Stemmed Words <span id="stemscount" class="label label-default">0</span></h4>
           </div>
-          <div class="panel-body">
+          <div class="panel-body not-padded">
             <textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="output" class="form-control" cols="30" rows="15" style="resize:none"></textarea>
             <button id="perfbtn" class="areabtn btn btn-info btn-lg btn-block" disabled>
               <em class="text-center">Performance: </em><span id="stemPerf" class="badge">0</span>
@@ -88,13 +88,30 @@
           </div>
           <h2 id="stemshow" class="text-center">...</h2>
         </div>
-        <button class="areabtn btn btn-default btn-lg btn-block" onclick="Stem.stopLiveStems()" disabled="true">
+        <button id="stopbtn" class="areabtn btn btn-default btn-lg btn-block" onclick="Stem.stopLiveStems()" disabled="true">
           Stop
         </button>
       </section>
     </div>
 
     <hr>
+
+    <!-- ============================================ -->
+    <!--                  Diff View                   -->
+    <!-- ============================================ -->
+
+    <div id="diffview" class="row hidden">
+      <section class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4>Stemmed Diff <span id="diffcount" class="label label-default">0</span></h4>
+          </div>
+          <div id="diff" class="panel-body">
+          </div>
+        </div>
+      </section>
+    </div>
+
 
   </main>
 

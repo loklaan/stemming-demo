@@ -6,7 +6,10 @@
    ========================================================================== */
 
    var isShowing = 0,
-   timeoutId = 0;
+   timeoutId = 0,
+   wordlist = [],
+   stemmed = [],
+   diffed = [];
 
    /* Init */
    $('#input').keyup(function() {
@@ -26,8 +29,10 @@
   };
 
   Exports.buildStems = function() {
-    var wordlist = [],
-    stemmed = [],
+    wordlist = [];
+    stemmed = [];
+    diffed = [];
+    var diffcount= 0,
     timer = 0;
     var clean = $('#input').val();
     if (typeof clean === "undefined") {
@@ -37,21 +42,39 @@
 
     wordlist = clean.split(' ');
 
+    // Build stems
     for (var index in wordlist) {
       if (wordlist.hasOwnProperty(index)) {
         var singleTimer = Date.now();
         var stem = stemmer(wordlist[index]);
         timer += Date.now() - singleTimer;
         stemmed.push(stem);
+
+        // Build diffs
+        for (var char in wordlist[index]) {
+          if (wordlist[index][char] !== stem[char]) {
+            var patch = wordlist[index].substr(0, char) + '<span class="bg-danger">' + wordlist[index].substr(char) + '</span>';
+            diffed.push(patch);
+            diffcount += 1;
+            break;
+          } else if (parseInt(char) === wordlist[index].length - 1) {
+            diffed.push(stem);
+          }
+        }
       }
     }
 
     stopTimeouts();
-    startLiveStem(wordlist, stemmed);
+    if (diffcount > 0) {
+      $('#diffview').removeClass('hidden');
+      $('#diffview').addClass('show');
+    }
+    startLiveStem(diffed, diffcount);
 
     $('#stemPerf').text((timer === 1 || timer === 0 ? '> 1' : timer) + 'ms');
     $('#output').val(stemmed.join(' '));
 
+    updateDiffCount(diffcount);
     updateStemWordCount();
     updateStemCharCount(stemmed.join('').length);
   };
@@ -60,42 +83,40 @@
    Private Functions
    ========================================================================== */
 
-   function startLiveStem(words, stems) {
-    if (words[0] === '' && words[0].length === 1) {
+   function startLiveStem(diffs) {
+    if (diffs[0] === '' && diffs[0].length === 1) {
       return;
     }
     var i = 0;
     var timeout;
     isShowing = true;
-    toggleStopLiveStemButton();
+    toggleStopLiveStemButton(true);
 
     var inFn = function() {
-      if (words[i] !== '') {
-        var patch = words[i];
-        for (var char in words[i]) {
-          if (words[i][char] !== stems[i][char]) {
-            patch = words[i].substr(0, char) + '<span class="bg-danger">' + words[i].substr(char) + '</span>';
-            break;
-          }
-        }
-        setCurrentStemInner(patch);
+      if (diffs[i] !== '') {
+        setCurrentStemInner(diffs[i]);
+        var temp = diffs[i];
+        diffs[i] = '<span class="bg-success">' + diffs[i] + '</span>';
+        $('#diff').html(diffs.join(' '));
+        diffs[i] = temp;
       }
       updateStemLiveCount(i + 1);
 
-      if (words[i].length > stems[i].length) {
+      if (diffs[i][diffs[i].length - 1] === '>') {
         timeout = 300;
       } else {
-        timeout = 150;
+        timeout = 20;
       }
 
-      if (words.length === 1 ) {
-        toggleStopLiveStemButton();
+      if (diffs.length === 1 ) {
+        toggleStopLiveStemButton(false);
         return;
-      } else if (i === words.length - 1 || !isShowing) {
+      } else if (i === diffs.length - 1 || !isShowing) {
         timeoutId = setTimeout(function() {
+          $('#diff').html(diffs.join(' '));
           setCurrentStemText('...');
           updateStemLiveCount('-');
-          toggleStopLiveStemButton();
+          toggleStopLiveStemButton(false);
         }, timeout);
       } else {
         i += 1;
@@ -114,8 +135,8 @@
     clearTimeout(timeoutId);
   }
 
-  function toggleStopLiveStemButton() {
-    if ($('#stopbtn').prop('disabled')) {
+  function toggleStopLiveStemButton(toggle) {
+    if (toggle) {
       $('#stopbtn').prop('disabled', false);
     } else {
       $('#stopbtn').prop('disabled', true);
@@ -152,6 +173,10 @@
 
   function updateStemWordCount() {
     $('#stemscount').text(getWordCount($('#output').val()));
+  }
+
+  function updateDiffCount(count) {
+    $('#diffcount').text(count);
   }
 
   function getWordCount(body) {
