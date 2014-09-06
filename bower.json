@@ -1,0 +1,21 @@
+{
+  "name": "Porter Stemmer Demo",
+  "version": "0.0.0",
+  "authors": [
+    "Lochlan Bunn <loklaan@gmail.com>"
+  ],
+  "description": "Live demo of Port Stemmer using offical JS implementation.",
+  "license": "none",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "jquery": "~2.1.1"
+  }
+}
