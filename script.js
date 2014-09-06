@@ -28,7 +28,11 @@
     isShowing = false;
   };
 
-  Exports.buildStems = function() {
+  Exports.buildStems = function(language) {
+    if (!language) {
+      language = 'EN';
+    }
+
     var steps = {
       one: $('#step1').prop('checked'),
       two: $('#step2').prop('checked'),
@@ -37,7 +41,7 @@
       five: $('#step5').prop('checked')
     };
 
-        wordlist = [];
+    wordlist = [];
     stemmed = [];
     diffed = [];
     var diffcount= 0,
@@ -47,6 +51,7 @@
       return;
     }
     clean = clean.replace(/[^\w]/g, ' ').replace(/\s+/g, ' ');
+    getLanguage(clean);
 
     wordlist = clean.split(' ');
 
@@ -133,6 +138,23 @@
     };
 
     inFn();
+  }
+
+  function getLanguage(words) {
+    var translateUrl = "http://ws.detectlanguage.com/0.2/detect?key=6c1e3bd21fe57a4007a8784cf0a95edc&q=";
+
+    var jqxhr = $.ajax(translateUrl + encodeURI(words).substr(0, 99))
+      .done(function(res) {
+        console.log(res);
+      })
+      .fail(function(res) {
+        console.log(res);
+
+      })
+      .always(function(res) {
+        console.log(res);
+
+      });
   }
 
 /*
