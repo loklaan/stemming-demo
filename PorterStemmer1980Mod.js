@@ -62,7 +62,7 @@ var stemmer = (function(){
     console.log(Array.prototype.slice.call(arguments).join(' '));
   }
 
-  return function (w, debug) {
+  return function (w, steps, debug) {
     var
       stem,
       suffix,
@@ -86,6 +86,24 @@ var stemmer = (function(){
     if (firstch == "y") {
       w = firstch.toUpperCase() + w.substr(1);
     }
+
+    if (steps.one) {
+      stepOne();
+    }
+    if (steps.two) {
+      stepTwo();
+    }
+    if (steps.three) {
+      stepThree();
+    }
+    if (steps.four) {
+      stepFour();
+    }
+    if (steps.five) {
+      stepFive();
+    }
+
+    function stepOne() {
 
     // Step 1a
     re = /^(.+?)(ss|i)es$/;
@@ -148,6 +166,10 @@ var stemmer = (function(){
       debugFunction('1c', re, w);
     }
 
+    } // end stepOne
+
+    function stepTwo() {
+
     // Step 2
     re = /^(.+?)(ational|tional|enci|anci|izer|bli|alli|entli|eli|ousli|ization|ation|ator|alism|iveness|fulness|ousness|aliti|iviti|biliti|logi)$/;
     if (re.test(w)) {
@@ -161,6 +183,10 @@ var stemmer = (function(){
       }
     }
 
+    } // end stepTwo
+
+    function stepThree() {
+
     // Step 3
     re = /^(.+?)(icate|ative|alize|iciti|ical|ful|ness)$/;
     if (re.test(w)) {
@@ -173,6 +199,10 @@ var stemmer = (function(){
         debugFunction('3', re, w);
       }
     }
+
+    } // end stepThree
+
+    function stepFour() {
 
     // Step 4
     re = /^(.+?)(al|ance|ence|er|ic|able|ible|ant|ement|ment|ent|ou|ism|ate|iti|ous|ive|ize)$/;
@@ -194,6 +224,10 @@ var stemmer = (function(){
         debugFunction('4', re2, w);
       }
     }
+
+    } // end stepFour
+
+    function stepFive() {
 
     // Step 5
     re = /^(.+?)e$/;
@@ -217,6 +251,8 @@ var stemmer = (function(){
       debugFunction('5', re, re2, w);
     }
 
+    } // end stepFive
+
     // and turn initial Y back to y
     if (firstch == "y") {
       w = firstch.toLowerCase() + w.substr(1);
@@ -224,5 +260,5 @@ var stemmer = (function(){
 
 
     return w;
-  }
+  };
 })();
