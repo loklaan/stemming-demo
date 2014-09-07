@@ -1,0 +1,26 @@
+#input, #output, #diff {
+  border-radius: 0;
+  border-radius: 0;
+  border: 0;
+}
+#input {
+  border-color: rgba(82, 168, 236, 0.8);
+  outline: 0px none;
+  box-shadow: 0px 0px 8px rgba(82, 168, 236, 0.6);
+}
+#output:focus, #diff:focus {
+  border-color: #CCC;
+  outline: 0px none;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.areabtn {
+  border-radius: 0;
+  border-radius: 0;
+}
+.not-padded {
+  padding:0;
+}
+input[type=checkbox] {
+  width: 1.2em;
+  height: 1.2em;
+}
