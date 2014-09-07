@@ -21,23 +21,24 @@ var express = require('express'),
 /**
  * Configuration
  */
+console.log('Starting Server and API service...');
+
 var app = express();
+
 app.use(express.static(path.join(__dirname + '/public')));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(methodOverride());
-app.use(session({ secret: 'cat-im-a-kitty-cat', saveUninitialized: true, resave: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
 app.set('port', process.env.PORT || 3000);
 var env = process.env.NODE_ENV || 'development';
+
 // development environment only
 if (env === 'development') {
   app.use(errorHandler());
-}
-// production environment only
-if (env === 'production') {
-  // TODO
 }
 
 require('./routes').init(app);
@@ -46,5 +47,5 @@ require('./routes').init(app);
  * Server Start
  */
 http.createServer(app).listen(app.get('port'), function () {
-  console.log('RESTful API server listening on port ' + app.get('port'));
+  console.log('Expressjs server running at http://localhost:' + app.get('port'));
 });
