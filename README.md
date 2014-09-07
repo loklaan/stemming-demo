@@ -4,6 +4,7 @@
 1. Porter Stemmer
 2. Language Detect
 3. Part of Speech Tagging
+4. Search for a type. ie fish or tree
 
 ## Install
 [Download](http://nodejs.org/download/) and install Node.JS (comes with `npm`)

@@ -24,3 +24,11 @@ input[type=checkbox] {
   width: 1.2em;
   height: 1.2em;
 }
+#tagged, #diff, #typeoutput  {
+  max-height: 15em;
+  overflow-y: scroll;
+}
+.typetag {
+  display: inline-block;
+  margin: 5px;
+}
