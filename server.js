@@ -1,7 +1,17 @@
 /* ==========================================================================
-   Simple RESTful API for: natural by NaturalNode.
+   Simple RESTful API for text processing and simple serving.
 
+   Using:
    https://github.com/NaturalNode/natural
+   https://www.npmjs.org/package/pos
+
+   WordNet Cites:
+   George A. Miller (1995). WordNet: A Lexical Database for English.
+     Communications of the ACM Vol. 38, No. 11: 39-41.
+   Christiane Fellbaum (1998, ed.) WordNet: An Electronic Lexical Database.
+     Cambridge, MA: MIT Press.
+
+   Made by Lochlan Bunn.
    ========================================================================== */
 
 

@@ -182,8 +182,8 @@
         $('#seachview').removeClass('show');
         $('#posview').addClass('hidden');
         $('#seachview').addClass('hidden');
-        $('#typeoutput').removeClass('show')
-        $('#typeoutput').showClass('hidden')
+        $('#typeoutput').removeClass('show');
+        $('#typeoutput').showClass('hidden');
       } else {
         _tagSets = data.sets;
         $('#posview').removeClass('hidden');
@@ -306,15 +306,15 @@
   function updateTypeOutput(matches) {
     var output = matches;
     output = _.map(output, function(match) {
-      return match.toUpperCase()
-    }),
+      return match.toUpperCase();
+    });
     output = _.uniq(output);
     output = _.reduce(output, function(html, match) {
       return html += '<h4 class="typetag"><span class="label label-success">' + match + '</span></h4>'
     }, '');
-    $('#typeoutput').html(output)
-    $('#typeoutput').removeClass('hidden')
-    $('#typeoutput').addClass('show')
+    $('#typeoutput').html(output);
+    $('#typeoutput').removeClass('hidden');
+    $('#typeoutput').addClass('show');
   }
 
   var frenchStopWords = /(?:\s)(alors|au|aucuns|aussi|autre|avant|avec|avoir|bon|car|ce|cela|ces|ceux|chaque|ci|comme|comment|dans|des|du|dedans|dehors|depuis|deux|devrait|doit|donc|dos|droite|début|elle|elles|en|encore|essai|est|et|eu|fait|faites|fois|font|force|haut|hors|ici|il|ils|je|juste|la|le|les|leur|là|ma|maintenant|mais|mes|mine|moins|mon|mot|même|ni|nommés|notre|nous|nouveaux|ou|où|par|parce|parole|pas|personnes|peut|peu|pièce|plupart|pour|pourquoi|quand|que|quel|quelle|quelles|quels|qui|sa|sans|ses|seulement|si|sien|son|sont|sous|soyez||sujet|sur|ta|tandis|tellement|tels|tes|ton|tous|tout|trop|très|tu|valeur|voie|voient|vont|votre|vous|vu|ça|étaient|état|étions|été|être)(?:\s)/gi;
