@@ -137,7 +137,7 @@
           });
 
           sets = _.reject(sets, function(sense) {
-            return set.length === 0;
+            return sense.length === 0;
           });
 
           return sets;
