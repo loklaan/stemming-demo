@@ -23,7 +23,7 @@
 /*
   Public Controllers
   ========================================================================== */
-  var Exports = window.Stem = {};
+  var Exports = window.Demo = {};
 
   Exports.stopLiveStems = function() {
     _isShowing = false;
@@ -53,8 +53,15 @@
 
     clean = clean.replace(/'/g, '').replace(/[^\w]/g, ' ').replace(/\s+/g, ' ');
     lang = getLanguage(clean);
-
-    $('#language').text(lang);
+    if (lang === 'French') {
+      $('#language').text(lang + ' (plurals only)');
+      $('#algorithm-steps').removeClass('show');
+      $('#algorithm-steps').addClass('hidden');
+    } else {
+      $('#language').text(lang);
+      $('#algorithm-steps').removeClass('hidden');
+      $('#algorithm-steps').addClass('show');
+    }
 
 
     _wordlist = clean.split(' ');
@@ -63,7 +70,7 @@
     for (var index in _wordlist) {
       if (_wordlist.hasOwnProperty(index)) {
         var singleTimer = Date.now();
-        var stem = stemmer(_wordlist[index], steps);
+        var stem = lang === 'English' ? stemmer(_wordlist[index], steps) : freStemmer(_wordlist[index]);
         timer += Date.now() - singleTimer;
         _stemmed.push(stem);
 
@@ -110,33 +117,13 @@
     updateTypeOutput(concat.match(re));
   };
 
-  Exports.getSenseInfo = function() {
-    var word = $('#senseinput').val().split(' ')[0];
-    $.ajax({
-      url: '/api/wordnet/' + word + '?set=synonyms',
-      type: 'GET'
-    }).done(function(data) {
-      $('#sensesynoutput').html('<strong>Synonyms grouped by sense: </strong>' + _.reduce(data, function(out, group) {
-        return out += '[ ' + _.reduce(group, function(outt, wrd) {
-          return outt += ' <span class="bg-info">' + wrd + '</span>,';
-        }, '') + ' ] ';
-      }, ''));
-    });
-    $.ajax({
-      url: '/api/wordnet/' + word + '?set=synonyms',
-      type: 'GET'
-    }).done(function(data) {
-      $('#sensehypoutput').html('<strong>Hypernyms grouped by sense: </strong>' + _.reduce(data, function(out, group) {
-        return out += '[ ' + _.reduce(group, function(outt, wrd) {
-          return outt += ' <span class="bg-info">' + wrd + '</span>,';
-        }, '') + ' ] ';
-      }, ''));
-    });
-  };
-
 /*
    Private Functions
    ========================================================================== */
+
+   function freStemmer(word) {
+    return word.replace(/([ier])ent|([ier])s$/i, '$1$2');
+   }
 
    function startLiveStem(diffs) {
     if (diffs[0] === '' && diffs[0].length === 1) {

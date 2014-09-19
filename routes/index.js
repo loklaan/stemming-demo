@@ -13,6 +13,11 @@
    ========================================================================== */
 
     var templates = path.join(__dirname, '../public/views/');
+
+    app.get('/wordnet', function(req, res) {
+      res.sendFile(templates + 'wordnet.html');
+    });
+
     app.get('/', function(req, res) {
       res.sendFile(templates + 'index.html');
     });
